@@ -1,0 +1,49 @@
+---
+# tasks file for nginx
+- set_fact:
+    nginx_user: www-data
+  when: ansible_os_family == "Debian"
+
+- set_fact:
+    nginx_user: nginx
+  when: ansible_os_family == "RedHat"
+
+- name: install nginx
+  ansible.builtin.include_tasks:
+     file: ubuntu.yml
+  when: ansible_os_family == "Debian"
+
+- name: CENTOS install nginx
+  ansible.builtin.include_tasks:
+    file: centos.yml
+  when: ansible_os_family == "RedHat"
+
+- name: setup nginx conf
+  template:
+    src=nginx.conf.j2
+    dest={{ nginx_path }}/nginx.conf
+  notify:
+    - reload nginx
+
+- name: setup app
+  template:
+    src=index.html.j2
+    dest={{ nginx_index }}/index.html
+  notify:
+    - reload nginx
+
+- name: start nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: check available Nginx
+  uri:
+    url: http://localhost
+    status_code: 200
+  register: nginx_status
+
+- name: output result check
+  debug:
+    var: nginx_status.status

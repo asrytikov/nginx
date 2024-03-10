@@ -1,0 +1,17 @@
+---
+# tasks file for nginx
+- name: install nginx
+  apt:
+    name: nginx=1.18.0-0ubuntu1.4
+    state: present
+
+- name: setup virtual host app1
+  template:
+    src=app.j2
+    dest={{ nginx_sites }}/app.conf
+
+- name: create symlink sites
+  file:
+    src={{ nginx_sites }}/app.conf
+    dest={{ nginx_sites_enable }}/app.conf
+    state=link

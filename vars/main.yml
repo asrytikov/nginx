@@ -1,0 +1,21 @@
+---
+# vars file for nginx
+nginx_path: /etc/nginx
+nginx_sites: "{{ nginx_path }}/sites-available"
+nginx_sites_enable: "{{ nginx_path }}/sites-enabled"
+nginx_index: /var/www/html
+nginx_sites_centos: "{{ nginx_path }}/conf.d"
+worker_connections: 768
+sendfile: "on"
+tcp_nopush: "on"
+tcp_nodelay: "on"
+
+
+week:
+- 'Monday'
+- 'Tuesday'
+- 'Wednesday'
+- 'Thursday'
+- 'Friday'
+- 'Saturday'
+- 'Sunday'

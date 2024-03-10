@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>Welcome to ansible</title>
+  </head>
+  <body>
+  <h1>nginx, configured by Ansible</h1>
+  <p>If you can see this, Ansible successfully installed nginx.</p>
+
+  <p>{{ inventory_hostname }}</p>
+  <p>
+     {% for day in week %}
+     {{ day }}
+     {% endfor %}
+  </p>
+  </body>
+</html>
